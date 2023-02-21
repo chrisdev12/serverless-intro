@@ -1,0 +1,32 @@
+service: mentoryAPI
+frameworkVersion: '3'
+
+plugins:
+  - serverless-lift
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+constructs:
+  jobs:
+    type: queue
+    worker:
+      handler: index.consumer
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+  
+  producer:
+    handler: index.producer
+    events:
+      - httpApi:
+          method: post
+          path: /produce
+    environment:
+      QUEUE_URL: ${construct:jobs.queueUrl}
