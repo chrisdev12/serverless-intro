@@ -1,0 +1,71 @@
+service: mentoryAPI
+frameworkVersion: "3"
+
+plugins:
+  - serverless-lift
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [UsersTable, Arn]
+  environment:
+    USERS_TABLE: ${self:custom.tableName}
+
+constructs:
+  jobs:
+    type: queue
+    worker:
+      handler: index.consumer
+
+functions:
+  GetOrderById:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+  PostOrder:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+  OrderManager:
+    handler: index.producer
+    events:
+      - httpApi:
+          method: post
+          path: /produce
+    environment:
+      QUEUE_URL: ${construct:jobs.queueUrl}
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
