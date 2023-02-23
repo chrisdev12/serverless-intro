@@ -13,6 +13,7 @@
     "sharedLambdaLayer": "file:./sharedLambdaLayer"
   },
   "scripts": {
-    "dev": "serverless offline"
+    "dev": "serverless offline",
+    "deploy": "serverless deploy"
   }
 }

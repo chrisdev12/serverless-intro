@@ -5,15 +5,18 @@ plugins:
   - serverless-lift
   - serverless-offline
 
+package:
+  individually: true
+
 custom:
   serverless-offline:
     httpPort: 4000
-  tableName: "users-table-${sls:stage}"
+  tableName: "delivery-orders-table-${sls:stage}"
 
 layers:
-  sharedLambdaLayer:
-    path: .common # required, path to layer contents on disk
-    name: ${sls:stage}-layerName # optional, Deployed Lambda layer name
+  Common:
+    path: ./sharedLambdaLayer # required, path to layer contents on disk
+    name: ${sls:stage}-sharedLambdaLayer # optional, Deployed Lambda layer name
     description: General DeliveryAPI lambda layer # optional, Description to publish to AWS
     compatibleRuntimes: # optional, a list of runtimes this layer is compatible with
       - nodejs14.x
@@ -33,17 +36,21 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [UsersTable, Arn]
+            - Fn::GetAtt: [DeliveryAPIOrdersTable, Arn]
   environment:
     ORDERS_TABLE: ${self:custom.tableName}
   layers:
-    - !Ref sharedLambdaLayer
+    - !Ref CommonLambdaLayer
 
 constructs:
   jobs:
     type: queue
     worker:
       handler: orderSubscription.handler
+      package:
+        patterns:
+          - "!node_modules/**"
+          - orderSubscription/
 
 functions:
   GetOrderById:
@@ -52,6 +59,10 @@ functions:
       - httpApi:
           path: /order/{orderId}
           method: get
+    package:
+      patterns:
+        - "!node_modules/**"
+        - orderHandler/
   PostOrder:
     handler: orderHandler/initOrder.handler
     events:
@@ -60,10 +71,14 @@ functions:
           method: post
     environment:
       QUEUE_URL: ${construct:jobs.queueUrl}
+    package:
+      patterns:
+        - "!node_modules/**"
+        - orderHandler/
 
 resources:
   Resources:
-    UsersTable:
+    DeliveryAPIOrdersTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
