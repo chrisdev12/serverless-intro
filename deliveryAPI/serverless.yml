@@ -8,10 +8,19 @@ plugins:
 custom:
   serverless-offline:
     httpPort: 4000
+  tableName: "users-table-${sls:stage}"
+
+layers:
+  sharedLambdaLayer:
+    path: .common # required, path to layer contents on disk
+    name: ${sls:stage}-layerName # optional, Deployed Lambda layer name
+    description: General DeliveryAPI lambda layer # optional, Description to publish to AWS
+    compatibleRuntimes: # optional, a list of runtimes this layer is compatible with
+      - nodejs14.x
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs14.x
   iam:
     role:
       statements:
@@ -26,7 +35,9 @@ provider:
           Resource:
             - Fn::GetAtt: [UsersTable, Arn]
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    ORDERS_TABLE: ${self:custom.tableName}
+  layers:
+    - !Ref sharedLambdaLayer
 
 constructs:
   jobs:
@@ -36,23 +47,17 @@ constructs:
 
 functions:
   GetOrderById:
-    handler: orderController.getHandler
+    handler: orderHandler/getOrder.handler
     events:
       - httpApi:
-          path: /
+          path: /order/{orderId}
           method: get
   PostOrder:
-    handler: orderController.postHandler
+    handler: orderHandler/initOrder.handler
     events:
       - httpApi:
-          path: /
-          method: get
-  OrderManager:
-    handler: orderSubscription.producer
-    events:
-      - httpApi:
+          path: /order
           method: post
-          path: /produce
     environment:
       QUEUE_URL: ${construct:jobs.queueUrl}
 
