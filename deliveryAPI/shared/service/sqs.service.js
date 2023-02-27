@@ -1,4 +1,7 @@
-const sendMessage = async (body) => {
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
+const sqs = new SQSClient();
+
+export const sendMessage = async (body) => {
   try {
     const sqsParams = {
       QueueUrl: process.env.QUEUE_URL,

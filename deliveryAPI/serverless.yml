@@ -7,6 +7,9 @@ plugins:
 
 package:
   individually: true
+  patterns:
+    - "!node_modules/*"
+    - package.json
 
 custom:
   serverless-offline:
@@ -14,8 +17,8 @@ custom:
   tableName: "delivery-orders-table-${sls:stage}"
 
 layers:
-  Common:
-    path: ./sharedLambdaLayer # required, path to layer contents on disk
+  DeliveryApiCommon:
+    path: ./lambda_layer # required, path to layer contents on disk
     name: ${sls:stage}-sharedLambdaLayer # optional, Deployed Lambda layer name
     description: General DeliveryAPI lambda layer # optional, Description to publish to AWS
     compatibleRuntimes: # optional, a list of runtimes this layer is compatible with
@@ -40,7 +43,7 @@ provider:
   environment:
     ORDERS_TABLE: ${self:custom.tableName}
   layers:
-    - !Ref CommonLambdaLayer
+    - !Ref DeliveryApiCommonLambdaLayer
 
 constructs:
   jobs:
@@ -49,8 +52,7 @@ constructs:
       handler: orderSubscription.handler
       package:
         patterns:
-          - "!node_modules/**"
-          - orderSubscription/
+          - orderSqsSubscriptor/
 
 functions:
   GetOrderById:
@@ -61,7 +63,6 @@ functions:
           method: get
     package:
       patterns:
-        - "!node_modules/**"
         - orderHandler/
   PostOrder:
     handler: orderHandler/initOrder.handler
@@ -73,7 +74,6 @@ functions:
       QUEUE_URL: ${construct:jobs.queueUrl}
     package:
       patterns:
-        - "!node_modules/**"
         - orderHandler/
 
 resources:
@@ -82,10 +82,10 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: userId
+          - AttributeName: orderId
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: orderId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tableName}

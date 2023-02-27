@@ -1,14 +1,10 @@
 {
-  "name": "mentory-api",
+  "name": "shared",
   "version": "1.0.0",
   "description": "Serverless Framework Node SQS Producer-Consumer on AWS",
   "author": "",
   "license": "MIT",
   "type": "module",
-  "devDependencies": {
-    "serverless-lift": "^1.21.1",
-    "serverless-offline": "^12.0.4"
-  },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.276.0",
     "@aws-sdk/client-sqs": "^3.276.0",

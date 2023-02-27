@@ -1,6 +1,6 @@
 import { plainToInstance } from "class-transformer";
-import { NewOrderDTO } from "sharedLambdaLayer/model/newOrder.dto.js";
-import { receiveOrder } from "sharedLambdaLayer/service/order.service.js";
+import { NewOrderDTO } from "shared/model/newOrder.dto.js";
+import { receiveOrder } from "shared/service/order.service.js";
 
 export const handler = async (event) => {
   try {

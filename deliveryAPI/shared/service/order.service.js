@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { create, getById, update } from "../repository/order.repository.js";
 import { Order } from "../model/order.js";
 import { sleep } from "../utils/sleep.js";
+import { sendMessage } from "./sqs.service.js";
 
 export const getOrder = async (id) => {
   const order = await getById(id);

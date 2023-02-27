@@ -1,7 +1,7 @@
 export class NewOrderDTO {
   restaurant;
   total;
-  creationDate = new Date();
+  creationDate = new Date().toISOString();
   lastUpdate = this.creationDate;
   status = "CREATED";
 }

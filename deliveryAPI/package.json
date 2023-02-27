@@ -9,11 +9,13 @@
     "serverless-lift": "^1.21.1",
     "serverless-offline": "^12.0.4"
   },
-  "dependencies": {
-    "sharedLambdaLayer": "file:./sharedLambdaLayer"
-  },
+  "workspaces": [
+    "shared"
+  ],
   "scripts": {
     "dev": "serverless offline",
+    "build": "npm install --production --prefix dist -g",
+    "package": "serverless package",
     "deploy": "serverless deploy"
   }
 }
