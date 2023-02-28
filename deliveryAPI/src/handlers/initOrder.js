@@ -1,6 +1,7 @@
+import "./module-alias";
 import { plainToInstance } from "class-transformer";
-import { NewOrderDTO } from "shared/model/newOrder.dto.js";
-import { receiveOrder } from "shared/service/order.service.js";
+import { NewOrderDTO } from "@lambdaLayer/model/newOrder.dto";
+import { receiveOrder } from "@lambdaLayer/service/order.service";
 
 export const handler = async (event) => {
   try {
@@ -24,3 +25,5 @@ export const handler = async (event) => {
     };
   }
 };
+
+handler();

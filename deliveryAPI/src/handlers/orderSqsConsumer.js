@@ -1,6 +1,7 @@
+import "./module-alias";
 import { plainToInstance } from "class-transformer";
-import { Order } from "shared/model/order.js";
-import { processOrder } from "shared/service/order.service.js";
+import { Order } from "@lambdaLayer/model/order";
+import { processOrder } from "@lambdaLayer/service/order.service";
 
 export const handler = async (event) => {
   for await (const record of event.Records) {

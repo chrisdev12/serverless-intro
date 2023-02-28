@@ -4,18 +4,24 @@
   "description": "Serverless Framework Node SQS Producer-Consumer on AWS",
   "author": "",
   "license": "MIT",
-  "type": "module",
-  "devDependencies": {
-    "serverless-lift": "^1.21.1",
-    "serverless-offline": "^12.0.4"
-  },
-  "workspaces": [
-    "shared"
-  ],
   "scripts": {
     "dev": "serverless offline",
-    "build": "npm install --production --prefix dist -g",
+    "build": "build.sh",
     "package": "serverless package",
     "deploy": "serverless deploy"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.276.0",
+    "@aws-sdk/client-sqs": "^3.276.0",
+    "@aws-sdk/lib-dynamodb": "^3.276.0",
+    "class-transformer": "^0.5.1",
+    "module-alias": "^2.2.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.17.10",
+    "glob": "^9.0.1",
+    "serverless-lift": "^1.21.1",
+    "serverless-offline": "^12.0.4"
   }
 }

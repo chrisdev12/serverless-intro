@@ -15,6 +15,8 @@ export const receiveOrder = async (newOrderDTO) => {
   await create(orderToInsert);
   const orderMessage = JSON.stringify(orderToInsert);
   await sendMessage(orderMessage);
+
+  return orderToInsert;
 };
 
 export const processOrder = async (order) => {

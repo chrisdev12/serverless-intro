@@ -1,4 +1,5 @@
-import { getOrder } from "shared/service/order.service.js";
+import "./module-alias";
+import { getOrder } from "@lambdaLayer/service/order.service";
 
 export const notFoundOrderError = "Sorry. This order has been not found";
 

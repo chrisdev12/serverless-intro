@@ -7,9 +7,12 @@ plugins:
 
 package:
   individually: true
-  patterns:
-    - "!node_modules/*"
+  exclude:
+    - node_modules/
+    - src/
+  include:
     - package.json
+    - dist/handlers/module-alias.js
 
 custom:
   serverless-offline:
@@ -18,7 +21,7 @@ custom:
 
 layers:
   DeliveryApiCommon:
-    path: ./lambda_layer # required, path to layer contents on disk
+    path: ./lib # required, path to layer contents on disk
     name: ${sls:stage}-sharedLambdaLayer # optional, Deployed Lambda layer name
     description: General DeliveryAPI lambda layer # optional, Description to publish to AWS
     compatibleRuntimes: # optional, a list of runtimes this layer is compatible with
@@ -52,20 +55,20 @@ constructs:
       handler: orderSubscription.handler
       package:
         patterns:
-          - orderSqsSubscriptor/
+          - dist/handler/sorderSqsConsumer.handler
 
 functions:
   GetOrderById:
-    handler: orderHandler/getOrder.handler
+    handler: handlers/getOrder.handler
     events:
       - httpApi:
           path: /order/{orderId}
           method: get
     package:
       patterns:
-        - orderHandler/
+        - handlers/
   PostOrder:
-    handler: orderHandler/initOrder.handler
+    handler: dist/handlers/initOrder.handler
     events:
       - httpApi:
           path: /order
@@ -74,7 +77,7 @@ functions:
       QUEUE_URL: ${construct:jobs.queueUrl}
     package:
       patterns:
-        - orderHandler/
+        - dist/handler/getOrder.handler
 
 resources:
   Resources:
