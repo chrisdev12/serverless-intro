@@ -1,0 +1,103 @@
+service: OnlyPatitas
+frameworkVersion: "3"
+
+plugins:
+  - serverless-lift
+  - serverless-offline
+
+package:
+  individually: true
+  exclude:
+    - node_modules/**
+    - src/**
+    - dist/**
+    - .prettierrc
+    - build.js
+    - build.sh
+    - jsconfig.json
+    - package-lock.json
+    - README.md
+  include:
+    - package.json
+    - dist/handlers/module-alias.js
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+  tableName: "only-patitas-${sls:stage}"
+
+layers:
+  SharedLib:
+    path: ./lib # required, path to layer contents on disk
+    name: ${sls:stage}-sharedLambdaLayer # optional, Deployed Lambda layer name
+    description: General DeliveryAPI lambda layer # optional, Description to publish to AWS
+    compatibleRuntimes: # optional, a list of runtimes this layer is compatible with
+      - nodejs14.x
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [OnlyPatitasTable, Arn]
+  environment:
+    PUPPY_TABLE: ${self:custom.tableName}
+    AWS_ENV: true
+  layers:
+    - !Ref SharedLibLambdaLayer
+
+# constructs:
+#   jobs:
+#     type: queue
+#     worker:
+#       #Order processor / SQS Consumer
+#       handler: dist/handlers/payment.controller.handler
+#       package:
+#         patterns:
+#           - dist/handlers/payment.controller
+
+functions:
+  #Get Puppy by Id handler
+  GetPuppy:
+    handler: dist/handlers/puppy.controller.get
+    events:
+      - httpApi:
+          path: /puppy/{puppyId}
+          method: get
+    package:
+      patterns:
+        - dist/handlers/puppy.controller
+  # Post new Puppy
+  PostPuppy:
+    handler: dist/handlers/puppy.controller.post
+    events:
+      - httpApi:
+          path: /puppy
+          method: post
+    package:
+      patterns:
+        - ddist/handlers/puppy.controller
+
+resources:
+  Resources:
+    OnlyPatitasTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
