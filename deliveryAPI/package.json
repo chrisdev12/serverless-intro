@@ -5,10 +5,11 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "dev": "serverless offline",
-    "build": "build.sh",
-    "package": "serverless package",
-    "deploy": "serverless deploy"
+    "dev": "npm run build && nodserverless offline",
+    "build": "node build.js",
+    "package": "build.sh",
+    "deploy": "npm run package && serverless deploy",
+    "just-deploy": "serverless deploy"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.276.0",
