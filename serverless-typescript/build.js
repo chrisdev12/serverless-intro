@@ -9,7 +9,8 @@ build({
   outdir: "dist",
   outbase: "src",
   loader: { ".ts": "ts" },
-  platform: "node",
+  platform: "node", // for ESM
+  format: "cjs",
   tsconfig: "tsconfig.prod.json",
   plugins: [dtsPlugin()],
 })
