@@ -10,7 +10,11 @@ export const getPuppy = async (id: string): Promise<unknown> => {
 };
 
 export const newPuppy = async (puppy: NewPuppyDTO): Promise<Puppy> => {
-  const puppyToSave = new Puppy({ id: randomUUID(), ...puppy });
+  const puppyToSave = new Puppy({
+    id: randomUUID(),
+    lastUpdate: new Date(),
+    ...puppy,
+  });
   await insert(puppyToSave);
 
   return puppyToSave;

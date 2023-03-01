@@ -24,16 +24,13 @@ export const getById = async (id: string) => {
 };
 
 export const insert = async (puppy: Puppy) => {
-  const { id, name, age, breed, lastUpdate, status } = puppy;
+  const { id, lastUpdate: date, ...puppyProperties } = puppy;
   const params = {
     TableName: PUPPY_TABLE,
     Item: {
       id,
-      name,
-      age,
-      breed,
-      lastUpdate,
-      status,
+      lastUpdate: date.toISOString(),
+      ...puppyProperties,
     },
   };
   await dynamoDbClient.send(new PutCommand(params));

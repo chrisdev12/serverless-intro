@@ -12,6 +12,6 @@ export class Puppy {
   public name: string;
   public age: number;
   public breed: string;
-  public lastUpdate: Date = new Date();
+  public lastUpdate: Date;
   public status: PuppyStatus;
 }

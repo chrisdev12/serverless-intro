@@ -77,24 +77,24 @@ provider:
 functions:
   #Get Puppy by Id handler
   GetPuppy:
-    handler: dist/handlers/puppy.controller.get
+    handler: dist/handlers/puppy-controller.get
     events:
       - httpApi:
           path: /puppy/{puppyId}
           method: get
     package:
       patterns:
-        - dist/handlers/puppy.controller.js
+        - dist/handlers/puppy-controller.js
   # Post new Puppy
   PostPuppy:
-    handler: dist/handlers/puppy.controller.post
+    handler: dist/handlers/puppy-controller.post
     events:
       - httpApi:
           path: /puppy
           method: post
     package:
       patterns:
-        - dist/handlers/puppy.controller.js
+        - dist/handlers/puppy-controller.js
 
 resources:
   Resources:
