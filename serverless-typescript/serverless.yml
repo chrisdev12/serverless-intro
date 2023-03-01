@@ -11,12 +11,20 @@ package:
     - node_modules/**
     - src/**
     - dist/**
+    - coverage/**
     - .prettierrc
+    - .eslintrc
+    - .eslintignore
     - build.js
     - build.sh
+    - tsconfig.json
+    - tsconfig.prod.json
     - jsconfig.json
+    - jest.config.js
+    - nodemon.json
     - package-lock.json
     - README.md
+    - /**
   include:
     - package.json
     - dist/handlers/module-alias.js
@@ -76,7 +84,7 @@ functions:
           method: get
     package:
       patterns:
-        - dist/handlers/puppy.controller
+        - dist/handlers/puppy.controller.js
   # Post new Puppy
   PostPuppy:
     handler: dist/handlers/puppy.controller.post
@@ -86,7 +94,7 @@ functions:
           method: post
     package:
       patterns:
-        - ddist/handlers/puppy.controller
+        - dist/handlers/puppy.controller.js
 
 resources:
   Resources:

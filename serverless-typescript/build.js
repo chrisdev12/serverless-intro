@@ -10,7 +10,7 @@ build({
   outbase: "src",
   loader: { ".ts": "ts" },
   platform: "node",
-  tsconfig: "tsconfig.prod.js",
+  tsconfig: "tsconfig.prod.json",
   plugins: [dtsPlugin()],
 })
   .then(() => console.log("⚡ Build done"))
