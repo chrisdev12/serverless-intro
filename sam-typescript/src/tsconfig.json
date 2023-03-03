@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "CommonJS",
+    "allowJs": true,
+    "checkJs": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "lib": ["es2020", "esnext.asynciterable"],
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@lambdaLayer/*": ["./shared/*"]
+    }
+  },
+  "include": ["./handlers/**/*", "./shared/**/* "],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}
