@@ -9,7 +9,6 @@ stack_name = "sam-typescript"
 
 [default.build]
 [default.build.parameters]
-cached = true
 parallel = true
 
 [default.deploy]

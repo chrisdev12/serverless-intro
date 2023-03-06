@@ -1,20 +1,22 @@
 {
-  "name": "hello_world",
+  "name": "sam-typescript",
   "version": "1.0.0",
   "description": "hello world sample for NodeJS",
   "main": "app.js",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
   "author": "SAM CLI",
   "license": "MIT",
+  "scripts": {
+    "unit": "jest",
+    "lint": "eslint './src/**/*.ts' --quiet --fix",
+    "compile": "tsc",
+    "test": "npm run compile && npm run unit",
+    "build": "node esbuild",
+    "build:sam": "npm run build && sam.cmd build"
+  },
   "dependencies": {
     "esbuild": "^0.14.14",
     "module-alias": "^2.2.2"
-  },
-  "scripts": {
-    "unit": "jest",
-    "lint": "eslint '*.ts' --quiet --fix",
-    "compile": "tsc",
-    "test": "npm run compile && npm run unit"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
@@ -26,6 +28,7 @@
     "esbuild-jest": "^0.5.0",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
+    "glob": "^9.2.1",
     "jest": "^27.5.0",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",

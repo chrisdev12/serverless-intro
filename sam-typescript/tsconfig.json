@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "CommonJS",
+    "module": "commonJS",
     "allowJs": true,
     "checkJs": true,
     "removeComments": true,
@@ -18,9 +18,9 @@
     "rootDir": "./",
     "baseUrl": "./",
     "paths": {
-      "@lambdaLayer/*": ["./shared/*"]
+      "@lambdaLayer/*": ["./src/shared/*"]
     }
   },
-  "include": ["./handlers/**/*", "./shared/**/* "],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "include": ["./src/"],
+  "exclude": ["node_modules"]
 }

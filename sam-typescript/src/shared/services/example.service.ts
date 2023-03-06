@@ -1,4 +1,4 @@
-import { getById } from "../repository/example.repository";
+import { getById } from "../repositories/example.repository";
 
 export const initProcess = () => {
   console.log("service init");
