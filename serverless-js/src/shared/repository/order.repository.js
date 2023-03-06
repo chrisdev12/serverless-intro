@@ -37,13 +37,25 @@ export const create = async (order) => {
   await dynamoDbClient.send(new PutCommand(params));
 };
 
-export const update = async (id, putParams) => {
+export const update = async (id, updateParams) => {
+  let updateExpression = "SET";
+  const expressionAttributeNames = {};
+  const expressionAttributeValues = {};
+  Object.keys(updateParams).forEach((value) => {
+    updateExpression += ` #${value} = :${value}Ref,`;
+    expressionAttributeNames[`#${value}`] = `${value}`;
+    expressionAttributeValues[`:${value}Ref`] = updateParams[value] ?? "";
+  });
+  const expressionWithoutTrailingCommma = updateExpression.slice(0, -1);
   const params = {
     TableName: ORDERS_TABLE,
     Item: {
       orderId: id,
-      ...putParams,
     },
+    UpdateExpression: expressionWithoutTrailingCommma,
+    ExpressionAttributeNames: expressionAttributeNames,
+    ExpressionAttributeValues: expressionAttributeValues,
   };
+
   await dynamoDbClient.send(new PutCommand(params));
 };

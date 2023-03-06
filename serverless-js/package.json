@@ -1,5 +1,5 @@
 {
-  "name": "mentory-api",
+  "name": "serverless-js",
   "version": "1.0.0",
   "description": "Serverless Framework Node SQS Producer-Consumer on AWS",
   "author": "",

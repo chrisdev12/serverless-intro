@@ -6,3 +6,6 @@ https://dev.to/elthrasher/managing-multiple-functions-with-aws-sam-and-webpack-1
 https://www.toptal.com/aws/typescript-jest-aws-sam-tutorial
 
 https://github.com/StackToolbox/aws-sam-webpack-plugin
+
+Webpack aliases: 
+https://stackoverflow.com/questions/41955331/specify-a-root-path-for-imports
