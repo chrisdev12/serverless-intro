@@ -12,7 +12,8 @@
     "compile": "tsc",
     "test": "npm run compile && npm run unit",
     "build": "node esbuild",
-    "build:sam": "npm run build && sam.cmd build"
+    "build:sam": "npm run build && sam.cmd build",
+    "deploy": "sam.cmd deploy"
   },
   "dependencies": {
     "esbuild": "^0.14.14",

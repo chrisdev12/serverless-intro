@@ -5,7 +5,7 @@ import path from "path";
 const layerFolder = "shared";
 const awsLayerPath = "/opt/nodejs";
 
-if (process.env.AWS_ENV === "true") {
+if (process.env.AWS_EXECUTION_ENV) {
   moduleAlias.addAliases({
     "@lambdaLayer": `${awsLayerPath}/${layerFolder}`,
   });

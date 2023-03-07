@@ -19,7 +19,7 @@ build-RuntimeDependenciesLayer:
 build-handler:
 
 	# Copy the dist production artifact in his proper artifact controller dir.
-	mkdir -p "$(ARTIFACTS_DIR)/dist/handler"
-	cp -R "dist/$(HANDLER).js" "$(ARTIFACTS_DIR)/dist/handler" \
-	&& cp dist/handlers/module-aliases.js "${ARTIFACTS_DIR}/dist/handler" \
-	&& cp package.json "${ARTIFACTS_DIR}/dist"
+	mkdir -p "$(ARTIFACTS_DIR)/dist/handlers"
+	cp -R "dist/$(HANDLER).js" "$(ARTIFACTS_DIR)/dist/handlers" \
+	&& cp dist/handlers/module-alias.js "${ARTIFACTS_DIR}/dist/handlers" \
+	&& cp package.json "${ARTIFACTS_DIR}"
