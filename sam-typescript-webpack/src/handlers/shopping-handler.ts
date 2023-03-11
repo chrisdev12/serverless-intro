@@ -1,4 +1,3 @@
-import "./module-alias";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { initProcess } from "@lambdaLayer/services/example.service";
 

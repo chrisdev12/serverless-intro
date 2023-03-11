@@ -16,7 +16,6 @@
     "prebuild": "rimraf .aws-sam .vscode",
     "prewatch": "rimraf .aws-sam .vscode",
     "watch": "webpack-cli -w",
-    
     "deploy": "sam.cmd deploy"
   },
   "dependencies": {

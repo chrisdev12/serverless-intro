@@ -22,8 +22,8 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      CodeUri: ./
-      Handler: dist/handlers/shopping-handler.handler
+      CodeUri: ./src/handlers
+      Handler: shopping-handler.handler
       Runtime: nodejs14.x
       Architectures:
         - x86_64

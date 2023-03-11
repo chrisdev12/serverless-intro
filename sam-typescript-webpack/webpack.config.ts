@@ -18,15 +18,21 @@ const config = (webpackConfigEnv, options): Configuration => {
     devtool: "source-map",
     resolve: {
       extensions: [".ts", ".js"],
+      alias: {
+        "@lambdaLayer": path.resolve(__dirname, "./src/shared"),
+      },
     },
     target: "node",
-    externals: process.env.NODE_ENV === "development" ? [] : ["aws-sdk"],
+    externals: mode === "production" ? ["aws-sdk"] : [],
     // Set the webpack mode
     mode: mode,
     module: {
       rules: [{ test: /\.tsx?$/, loader: "ts-loader" }],
     },
     plugins: [awsSamPlugin],
+    optimization: {
+      usedExports: true,
+    },
   };
 };
 
